@@ -6,7 +6,7 @@ import OpenAI from "openai";
 // -------------------- Wissensdatenbank laden --------------------
 let knowledge = [];
 try {
-  const data = fs.readFileSync(path.join(process.cwd(), "api/knowledge.json"), "utf8");
+  const data = fs.readFileSync(path.join(process.cwd(), "knowledge.json"), "utf8");
   knowledge = JSON.parse(data);
 } catch (err) {
   console.warn("⚠️ knowledge.json nicht gefunden. Verwende leere Wissensdatenbank.");
@@ -116,5 +116,6 @@ Antwort (strictly based on knowledge base):
     res.json({ reply: "Fehler beim Abrufen der Antwort." });
   }
 }
+
 
 
