@@ -50,7 +50,7 @@ function saveChat(userMsg, botReply) {
 // -------------------- Hugging Face Client Setup --------------------
 const client = new OpenAI({
   baseURL: "https://router.huggingface.co/v1",
-  apiKey: process.env.HF_API_KEY,
+  apiKey: "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",
 });
 
 // -------------------- Vercel Handler --------------------
@@ -116,3 +116,4 @@ Antwort (strictly based on knowledge base):
     res.json({ reply: "Fehler beim Abrufen der Antwort." });
   }
 }
+
