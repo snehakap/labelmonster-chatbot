@@ -52,6 +52,15 @@ const hfClient = new OpenAI({
 
 // -------------------- API Handler --------------------
 export default async function handler(req, res) {
+  // --- Enable CORS for any origin ---
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end(); // Preflight request
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ reply: "Only POST requests are allowed." });
   }
