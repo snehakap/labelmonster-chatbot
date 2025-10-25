@@ -1,6 +1,19 @@
 import natural from "natural";
 import axios from "axios";
-import knowledge from "../knowledge.json" assert { type: "json" }; // ✅ static import — works on Vercel
+import path from "path";
+import { promises as fs } from "fs";
+
+// -------------------- Load knowledge.json --------------------
+let knowledge = [];
+const knowledgePath = path.join(process.cwd(), "knowledge.json"); // adjust if your file is elsewhere
+
+async function loadKnowledge() {
+  if (!knowledge.length) {
+    const data = await fs.readFile(knowledgePath, "utf-8");
+    knowledge = JSON.parse(data);
+  }
+  return knowledge;
+}
 
 // -------------------- Utility Functions --------------------
 function extractKeywords(text) {
@@ -10,12 +23,13 @@ function extractKeywords(text) {
   return words.filter(w => !stopwords.includes(w));
 }
 
-function findRelevantKnowledge(question) {
+async function findRelevantKnowledge(question) {
+  const knowledgeData = await loadKnowledge();
   const keywords = extractKeywords(question);
   let bestMatch = null;
   let bestScore = 0;
 
-  for (const entry of knowledge) {
+  for (const entry of knowledgeData) {
     if (!entry.patterns) continue;
     for (const pattern of entry.patterns) {
       for (const keyword of keywords) {
@@ -40,7 +54,7 @@ export default async function handler(req, res) {
   if (!message) return res.json({ reply: "Keine Nachricht erhalten." });
 
   try {
-    const matched = findRelevantKnowledge(message);
+    const matched = await findRelevantKnowledge(message);
 
     if (!matched) {
       return res.json({
