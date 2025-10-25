@@ -3,18 +3,15 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Labelmonster AI Chatbot",
-  "main": "server.js",
+  "main": "api/chat.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node api/chat.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@huggingface/inference": "^4.12.0",
     "axios": "^1.12.2",
-    "body-parser": "^2.2.0",
-    "express": "^4.21.2",
-    "natural": "^8.1.0",
-    "openai": "^6.6.0"
+    "natural": "^8.1.0"
   }
 }
