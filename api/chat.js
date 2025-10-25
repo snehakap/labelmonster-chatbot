@@ -1,11 +1,11 @@
 import natural from "natural";
-import axios from "axios";
 import path from "path";
 import { promises as fs } from "fs";
+import { OpenAI } from "openai";
 
 // -------------------- Load knowledge.json --------------------
 let knowledge = [];
-const knowledgePath = path.join(process.cwd(), "knowledge.json"); // adjust path if needed
+const knowledgePath = path.join(process.cwd(), "knowledge.json");
 
 async function loadKnowledge() {
   if (!knowledge.length) {
@@ -43,6 +43,12 @@ async function findRelevantKnowledge(question) {
   }
   return bestScore > 0.8 ? bestMatch : null;
 }
+
+// -------------------- Hugging Face Client --------------------
+const hfClient = new OpenAI({
+  baseURL: "https://router.huggingface.co/v1",
+  apiKey: process.env.HF_API_KEY, // store in .env
+});
 
 // -------------------- API Handler --------------------
 export default async function handler(req, res) {
@@ -92,26 +98,18 @@ User Question: ${message}
 Antwort (strictly based on knowledge base):
 `;
 
-    const HF_API_KEY = process.env.HF_API_KEY;
-
-    const response = await axios.post(
-      "https://api-inference.huggingface.co/models/google/gemma-2b-it",
-      { inputs: prompt },
-      {
-        headers: {
-          Authorization: `Bearer ${HF_API_KEY}`,
-          "Content-Type": "application/json",
+    const chatCompletion = await hfClient.chat.completions.create({
+      model: "google/gemma-2-2b-it:nebius",
+      messages: [
+        {
+          role: "user",
+          content: prompt,
         },
-        timeout: 60000,
-      }
-    );
+      ],
+    });
 
-    let reply = "Entschuldigung, ich konnte keine Antwort generieren.";
-    if (Array.isArray(response.data) && response.data[0]?.generated_text) {
-      reply = response.data[0].generated_text.trim();
-    } else if (typeof response.data === "string") {
-      reply = response.data.trim();
-    }
+    let reply = chatCompletion.choices[0].message?.content?.trim() || 
+                "Entschuldigung, ich konnte keine Antwort generieren.";
 
     return res.status(200).json({ reply });
   } catch (err) {
