@@ -5,7 +5,8 @@
   "description": "Labelmonster AI Chatbot",
   "main": "api/chat.js",
   "scripts": {
-    "start": "node api/chat.js"
+    "start": "node api/chat.js",
+    "dev": "nodemon api/chat.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +14,8 @@
     "@huggingface/inference": "^4.12.0",
     "axios": "^1.12.2",
     "natural": "^8.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }
