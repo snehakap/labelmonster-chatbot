@@ -1,18 +1,8 @@
-import fs from "fs";
-import path from "path";
 import natural from "natural";
-import OpenAI from "openai";
+import axios from "axios";
+import knowledge from "../knowledge.json" assert { type: "json" }; // ✅ static import — works on Vercel
 
-// -------------------- Wissensdatenbank laden --------------------
-let knowledge = [];
-try {
-  const data = fs.readFileSync(path.join(process.cwd(), "knowledge.json"), "utf8");
-  knowledge = JSON.parse(data);
-} catch (err) {
-  console.warn("⚠️ knowledge.json nicht gefunden. Verwende leere Wissensdatenbank.");
-}
-
-// -------------------- Hilfsfunktionen --------------------
+// -------------------- Utility Functions --------------------
 function extractKeywords(text) {
   const tokenizer = new natural.WordTokenizer();
   const words = tokenizer.tokenize(text.toLowerCase());
@@ -40,37 +30,23 @@ function findRelevantKnowledge(question) {
   return bestScore > 0.8 ? bestMatch : null;
 }
 
-function saveChat(userMsg, botReply) {
-  const log = { timestamp: new Date().toISOString(), user: userMsg, bot: botReply };
-  fs.appendFile("chatlogs.json", JSON.stringify(log) + "\n", (err) => {
-    if (err) console.error("❌ Fehler beim Speichern des Chats:", err);
-  });
-}
-
-// -------------------- Hugging Face Client Setup --------------------
-const client = new OpenAI({
-  baseURL: "https://router.huggingface.co/v1",
-  apiKey: process.env.HF_API_KEY,
-});
-
-// -------------------- Vercel Handler --------------------
+// -------------------- API Handler --------------------
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    res.status(405).send("Method Not Allowed");
-    return;
+    return res.status(405).json({ reply: "Only POST requests are allowed." });
   }
 
   const { message } = req.body;
   if (!message) return res.json({ reply: "Keine Nachricht erhalten." });
 
   try {
-    const matchedEntry = findRelevantKnowledge(message);
+    const matched = findRelevantKnowledge(message);
 
-    if (!matchedEntry) {
-      const fallback =
-        "Entschuldigung, das habe ich nicht verstanden. Bitte stellen Sie eine klare Frage oder senden Sie uns eine E-Mail an <a href='mailto:info@labelmonster.eu'>info@labelmonster.eu</a>.";
-      saveChat(message, fallback);
-      return res.json({ reply: fallback });
+    if (!matched) {
+      return res.json({
+        reply:
+          "Entschuldigung, das habe ich nicht verstanden. Bitte schreiben Sie uns an <a href='mailto:info@labelmonster.eu'>info@labelmonster.eu</a>.",
+      });
     }
 
     const prompt = `
@@ -83,8 +59,8 @@ You are NOT allowed to add, guess, or invent information beyond what is in the A
 If the provided answer already fits, repeat it naturally — do not rephrase or expand beyond minor adjustments for fluency.
 
 Knowledge Base Entry:
-Patterns: ${matchedEntry.patterns.join(", ")}
-Answer: ${matchedEntry.answer}
+Patterns: ${matched.patterns.join(", ")}
+Answer: ${matched.answer}
 
 Instructions:
 - Answer **only** from the "Answer" field above.
@@ -94,7 +70,7 @@ Instructions:
 - Write in a professional, natural, and friendly tone suitable for a company chatbot.
 - Do NOT start the reply with phrases like "Antwort:", "Answer:", or quotes.
 - Any user question related to address or location should be "Großenbaumer Allee 98, 47269 Duisburg".
-- If the you are not confident or the information is not in the "Answer", do not attempt to answer; instead, say exactly:
+- If you are not confident or the information is not in the "Answer", do not attempt to answer; instead, say exactly:
   "Entschuldigung, das habe ich nicht verstanden. Bitte stellen Sie eine klare Frage oder senden Sie uns eine E-Mail an <a href='mailto:info@labelmonster.eu'>info@labelmonster.eu</a>, damit wir Ihnen besser weiterhelfen können."
 
 User Question: ${message}
@@ -102,21 +78,32 @@ User Question: ${message}
 Antwort (strictly based on knowledge base):
 `;
 
-    const chatCompletion = await client.chat.completions.create({
-      model: "google/gemma-2-2b-it:nebius",
-      messages: [{ role: "user", content: prompt }],
-    });
+    const HF_API_KEY = process.env.HF_API_KEY;
 
-    const cleanReply = chatCompletion.choices?.[0]?.message?.content?.trim() || "Keine Antwort gefunden.";
-    saveChat(message, cleanReply);
-    res.json({ reply: cleanReply });
+    const response = await axios.post(
+      "https://api-inference.huggingface.co/models/google/gemma-2b-it",
+      { inputs: prompt },
+      {
+        headers: {
+          Authorization: `Bearer ${HF_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        timeout: 60000,
+      }
+    );
 
+    let reply = "Entschuldigung, ich konnte keine Antwort generieren.";
+    if (Array.isArray(response.data) && response.data[0]?.generated_text) {
+      reply = response.data[0].generated_text.trim();
+    } else if (typeof response.data === "string") {
+      reply = response.data.trim();
+    }
+
+    return res.status(200).json({ reply });
   } catch (err) {
-    console.error("❌ Hugging Face API Error:", err.message);
-    res.json({ reply: "Fehler beim Abrufen der Antwort." });
+    console.error("❌ Fehler beim Abrufen der Antwort:", err.message);
+    return res.status(500).json({
+      reply: "Fehler beim Abrufen der Antwort von Gemma.",
+    });
   }
 }
-
-
-
-
