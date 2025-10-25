@@ -5,7 +5,7 @@ import { promises as fs } from "fs";
 
 // -------------------- Load knowledge.json --------------------
 let knowledge = [];
-const knowledgePath = path.join(process.cwd(), "knowledge.json"); // adjust if your file is elsewhere
+const knowledgePath = path.join(process.cwd(), "knowledge.json"); // adjust path if needed
 
 async function loadKnowledge() {
   if (!knowledge.length) {
