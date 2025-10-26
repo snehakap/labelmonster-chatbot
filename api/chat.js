@@ -2,6 +2,7 @@ import natural from "natural";
 import path from "path";
 import { promises as fs } from "fs";
 import { OpenAI } from "openai";
+import axios from "axios"; 
 
 // -------------------- Load knowledge.json --------------------
 let knowledge = [];
@@ -47,8 +48,18 @@ async function findRelevantKnowledge(question) {
 // -------------------- Hugging Face Client --------------------
 const hfClient = new OpenAI({
   baseURL: "https://router.huggingface.co/v1",
-  apiKey: process.env.HF_API_KEY, // store in .env
+  apiKey: process.env.HF_API_KEY,
 });
+
+// -------------------- Google Form Config --------------------
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSf-mODoH3tjHMrzY8-j-choYfYHMXQUiGZCnWQ8V6cg02GXeA/formResponse";
+
+// Replace with actual entry IDs from your Google Form fields
+const GOOGLE_FORM_ENTRIES = {
+  question: "entry.1378060286", // Field 1
+  answer: "entry.2072247045",   // Field 2
+  timestamp: "entry.455345515", // Field 3
+};
 
 // -------------------- API Handler --------------------
 export default async function handler(req, res) {
@@ -58,7 +69,7 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   if (req.method === "OPTIONS") {
-    return res.status(200).end(); // Preflight request
+    return res.status(200).end();
   }
 
   if (req.method !== "POST") {
@@ -72,17 +83,19 @@ export default async function handler(req, res) {
     const matched = await findRelevantKnowledge(message);
 
     if (!matched) {
-      return res.json({
-        reply:
-          "Entschuldigung, das habe ich nicht verstanden. Bitte schreiben Sie uns an <a href='mailto:info@labelmonster.eu'>info@labelmonster.eu</a>.",
-      });
+      const fallbackReply =
+        "Entschuldigung, das habe ich nicht verstanden. Bitte stellen Sie eine klare Frage oder senden Sie uns eine E-Mail an <a href='mailto:info@labelmonster.eu'>info@labelmonster.eu</a>, damit wir Ihnen besser weiterhelfen können.";
+
+      // ✅ Log question + fallback reply
+      await logToGoogleForm(message, fallbackReply);
+
+      return res.json({ reply: fallbackReply });
     }
 
     const prompt = `
 You are the official assistant of Labelmonster.
-
 Your ONLY task:
-Use **only** the provided "Knowledge Base Entry" to answer the user's question. 
+Use **only** the provided "Knowledge Base Entry" to answer the user's question.
 Understand the context of the user's question and look for similar questions in the "Knowledge Base Entry" to answer.
 You are NOT allowed to add, guess, or invent information beyond what is in the Answer field.
 If the provided answer already fits, repeat it naturally — do not rephrase or expand beyond minor adjustments for fluency.
@@ -110,15 +123,15 @@ Antwort (strictly based on knowledge base):
     const chatCompletion = await hfClient.chat.completions.create({
       model: "google/gemma-2-2b-it:nebius",
       messages: [
-        {
-          role: "user",
-          content: prompt,
-        },
+        { role: "user", content: prompt },
       ],
     });
 
-    let reply = chatCompletion.choices[0].message?.content?.trim() || 
+    let reply = chatCompletion.choices[0].message?.content?.trim() ||
                 "Entschuldigung, ich konnte keine Antwort generieren.";
+
+    // ✅ Log question + reply to Google Form
+    await logToGoogleForm(message, reply);
 
     return res.status(200).json({ reply });
   } catch (err) {
@@ -126,5 +139,20 @@ Antwort (strictly based on knowledge base):
     return res.status(500).json({
       reply: "Fehler beim Abrufen der Antwort von Gemma.",
     });
+  }
+}
+
+// -------------------- Log to Google Form --------------------
+async function logToGoogleForm(question, answer) {
+  try {
+    const payload = new URLSearchParams();
+    payload.append(GOOGLE_FORM_ENTRIES.question, question);
+    payload.append(GOOGLE_FORM_ENTRIES.answer, answer);
+
+    await axios.post(GOOGLE_FORM_URL, payload.toString(), {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+  } catch (err) {
+    console.error("⚠️ Fehler beim Senden an Google Form:", err.message);
   }
 }
