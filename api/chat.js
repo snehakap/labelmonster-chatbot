@@ -56,9 +56,9 @@ const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSf-mODoH3t
 
 // Replace with actual entry IDs from your Google Form fields
 const GOOGLE_FORM_ENTRIES = {
-  question: "entry.455345515", // Field 1
-  answer: "entry.1378060286" ,   // Field 2
-  timestamp: "entry.2072247045", // Field 3
+  question: "entry.1378060286", // Field 1
+  answer: "entry.2072247045",   // Field 2
+  timestamp: "entry.455345515" , // Field 3
 };
 
 // -------------------- API Handler --------------------
@@ -156,4 +156,5 @@ async function logToGoogleForm(question, answer) {
     console.error("⚠️ Fehler beim Senden an Google Form:", err.message);
   }
 }
+
 
