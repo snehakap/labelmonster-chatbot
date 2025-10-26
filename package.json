@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "openai": "^5.0.0",
-    "natural": "^8.1.0"
+    "natural": "^8.1.0",
+    "axios": "^1.4.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
