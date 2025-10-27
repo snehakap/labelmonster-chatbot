@@ -9,6 +9,50 @@
     "answer": "Hallo 👋, wie kann ich Ihnen helfen?"
   },
   {
+    "id": "CPM_Kosten",
+    "patterns": [
+      "Was kostet ein CPM-100 / CPM-200", "Was kostet ein cpm 100","Was kostet ein cpm 200",
+      "How much does a CPM-100 / CPM-200 cost?", "Was kostet ein cpm-100","Was kostet ein cpm100","Was kostet ein cpm200",
+      "kostet", "kosten", "price", "Preis", 
+      "how much is CPM", "Gerätekosten", "what is the price","Was kostet ein CPM-100",
+"Preis CPM-100",
+"Wie viel kostet ein CPM-100",
+"Was kostet ein CPM-200",
+"Preis CPM-200",
+"Wie viel kostet ein CPM-200",
+"Kosten für CPM-100",
+"Kosten für CPM-200",
+"Wie teuer ist ein CPM-100",
+"Wie teuer ist ein CPM-200",
+"CPM-100 Preis",
+"CPM-200 Preis","Wie viel kostet das?", "Was kostet das Produkt?", "Wie hoch sind die Kosten?", "Gibt es einen Preis für das Gerät?", "Wie viel muss ich bezahlen?", "Gibt es Rabatte oder Angebote?", "Ist der Preis inklusive Versand?", "Welche Zahlungsoptionen gibt es?", "Kann ich in Raten bezahlen?", "Gibt es Sonderpreise für Firmenkunden?", "Wie teuer ist die Software?", "Wie teuer ist das Zubehör?", "Gibt es zusätzliche Kosten?", "Wie hoch sind die Servicekosten?", "Gibt es versteckte Kosten?", "Wie berechnet sich der Preis?", "Kann ich ein Angebot bekommen?", "Gibt es Staffelpreise?", "Wie viel kostet der Ersatz?", "Gibt es eine Preisliste?", "Sind die Kosten im Katalog angegeben?", "Gibt es Preisnachlässe für größere Mengen?", "Wie viel kostet ein Upgrade?", "Gibt es einen Wartungsvertrag und was kostet der?",
+"CPM-100 Kosten",
+"CPM-200 Kosten",
+"Was kostet ein CPM-100 Gerät",
+"Was kostet ein CPM-200 Gerät",
+"Preisangabe CPM-100",
+"Preisangabe CPM-200",
+"CPM-100 kaufen",
+"CPM-200 kaufen",
+"Wie viel muss ich für CPM-100 bezahlen",
+"Wie viel muss ich für CPM-200 bezahlen",
+"CPM-100 Angebot",
+"CPM-200 Angebot",
+"Ich möchte wissen, was CPM-100 kostet",
+"Ich möchte wissen, was CPM-200 kostet",
+"CPM-100 und CPM-200 Preis",
+"CPM-100 / CPM-200 Kosten",
+"CPM-100 / CPM-200 Preisangabe",
+"Wie viel kostet CPM-100 / CPM-200",
+"Wie teuer sind CPM-100 und CPM-200",
+"CPM-100 / CPM-200 kaufen Preis",
+"Was verlangen Sie für CPM-100",
+"Was verlangen Sie für CPM-200",
+"Preis für CPM-100 und CPM-200"
+    ],
+    "answer": "Die Preise sind abhängig von Ausstattung, Software und Servicepaket. Gerne erstellen wir ein individuelles Angebot. Oder registrieren Sie sich bitte, um die Preisliste herunterzuladen."
+  },
+  {
     "id": "delivery_cost",
     "patterns": [
       "lieferkosten",
@@ -299,7 +343,7 @@
 "Wie kann ich eine Rechnung reklamieren?","Wie bestelle ich ein Produkt?", "Kann ich online bestellen?", "Wie lange dauert die Lieferung?", "Wie hoch sind die Lieferkosten?", "Gibt es kostenlosen Versand?", "Kann ich meine Bestellung verfolgen?", "Wie ändere ich meine Lieferadresse?", "Kann ich meine Bestellung stornieren?", "Wie erfahre ich den Lieferstatus?", "Wer liefert meine Bestellung?", "Gibt es Expresslieferung?", "Wie schnell kommt meine Bestellung an?", "Kann ich die Lieferzeit ändern?", "Kann ich mehrere Produkte gleichzeitig bestellen?", "Wie überprüfe ich meine Bestellung?", "Gibt es eine Bestellbestätigung?", "Wie storniere ich eine Bestellung?", "Kann ich ein Produkt nachbestellen?", "Gibt es Lieferbeschränkungen?", "Wie hoch sind die Versandkosten ins Ausland?", "Wann wird mein Paket verschickt?", "Kann ich die Lieferung an einem bestimmten Tag erhalten?", "Wie verpackt ihr die Lieferung?", "Was passiert, wenn die Lieferung verspätet ist?", "Gibt es eine Rücksendung bei Problemen mit der Lieferung?", "Kann ich meine Bestellung abholen?", "Wie erhalte ich eine Rechnung für meine Bestellung?", "Gibt es eine Lieferbestätigung?"
 
   ],
-  "answer": "Für Ihre Bestellungen und Kaufanfragen wenden Sie sich bitte an die folgenden Kontaktmöglichkeiten:<br>📞 Telefon: <a href='tel:+4920375774321'>+49 (0) 203 - 75 77 43 21</a><br>📧 E-Mail: <a href='mailto:order@labelmonster.eu'>order@labelmonster.eu</a><br>📠 Fax: <a href='tel:+4920375774321'>+49 (0) 203 - 75 77 43 21</a>"
+  "answer": "Für Ihre Bestellungen und Kaufanfragen wenden Sie sich bitte an die folgenden Kontaktmöglichkeiten:<br>📞 Telefon: <a href='tel:+4920375774321'>+49 (0) 203 - 75 77 43 21</a><br>📧 E-Mail: <a href='mailto:order@labelmonster.eu'>order@labelmonster.eu</a>"
 },
   {
   "id": "lieferbedingungen",
@@ -1232,50 +1276,6 @@
     "answer": "Bitte wenden Sie sich hierzu bitte an unseren Support unter +49 203 75776900 oder support@labelmonster.eu."
   },
   {
-    "id": "CPM_Kosten",
-    "patterns": [
-      "Was kostet ein CPM-100 / CPM-200", 
-      "How much does a CPM-100 / CPM-200 cost?", 
-      "kostet", "kosten", "price", "Preis", 
-      "how much is CPM", "Gerätekosten", "what is the price","Was kostet ein CPM-100",
-"Preis CPM-100",
-"Wie viel kostet ein CPM-100",
-"Was kostet ein CPM-200",
-"Preis CPM-200",
-"Wie viel kostet ein CPM-200",
-"Kosten für CPM-100",
-"Kosten für CPM-200",
-"Wie teuer ist ein CPM-100",
-"Wie teuer ist ein CPM-200",
-"CPM-100 Preis",
-"CPM-200 Preis","Wie viel kostet das?", "Was kostet das Produkt?", "Wie hoch sind die Kosten?", "Gibt es einen Preis für das Gerät?", "Wie viel muss ich bezahlen?", "Gibt es Rabatte oder Angebote?", "Ist der Preis inklusive Versand?", "Welche Zahlungsoptionen gibt es?", "Kann ich in Raten bezahlen?", "Gibt es Sonderpreise für Firmenkunden?", "Wie teuer ist die Software?", "Wie teuer ist das Zubehör?", "Gibt es zusätzliche Kosten?", "Wie hoch sind die Servicekosten?", "Gibt es versteckte Kosten?", "Wie berechnet sich der Preis?", "Kann ich ein Angebot bekommen?", "Gibt es Staffelpreise?", "Wie viel kostet der Ersatz?", "Gibt es eine Preisliste?", "Sind die Kosten im Katalog angegeben?", "Gibt es Preisnachlässe für größere Mengen?", "Wie viel kostet ein Upgrade?", "Gibt es einen Wartungsvertrag und was kostet der?",
-"CPM-100 Kosten",
-"CPM-200 Kosten",
-"Was kostet ein CPM-100 Gerät",
-"Was kostet ein CPM-200 Gerät",
-"Preisangabe CPM-100",
-"Preisangabe CPM-200",
-"CPM-100 kaufen",
-"CPM-200 kaufen",
-"Wie viel muss ich für CPM-100 bezahlen",
-"Wie viel muss ich für CPM-200 bezahlen",
-"CPM-100 Angebot",
-"CPM-200 Angebot",
-"Ich möchte wissen, was CPM-100 kostet",
-"Ich möchte wissen, was CPM-200 kostet",
-"CPM-100 und CPM-200 Preis",
-"CPM-100 / CPM-200 Kosten",
-"CPM-100 / CPM-200 Preisangabe",
-"Wie viel kostet CPM-100 / CPM-200",
-"Wie teuer sind CPM-100 und CPM-200",
-"CPM-100 / CPM-200 kaufen Preis",
-"Was verlangen Sie für CPM-100",
-"Was verlangen Sie für CPM-200",
-"Preis für CPM-100 und CPM-200"
-    ],
-    "answer": "Die Preise sind abhängig von Ausstattung, Software und Servicepaket. Gerne erstellen wir ein individuelles Angebot. Oder registrieren Sie sich bitte, um die Preisliste herunterzuladen."
-  },
-  {
     "id": "CPM_Testgeraet",
     "patterns": [
       "Kann ich ein Testgerät bekommen", "Can I get a test device?", 
@@ -1290,7 +1290,7 @@
 "Kann ich ein CPM-100 Testgerät bekommen",
 "Kann ich ein CPM-200 Testgerät bekommen",
 "Testgerät zur Vorführung",
-"Testgerät Probe",
+"Testgerät Probe","Was kostet ein cpm-200",
 "Vorführgerät anfordern",
 "Kann ich ein Gerät ausprobieren",
 "Gerät testen",
@@ -2635,5 +2635,6 @@
     "answer": "Unsere Geräte sind für den professionellen Dauereinsatz entwickelt und überzeugen durch hohe Robustheit und Langlebigkeit – ideal für Industrie- und Produktionsumgebungen."
   }
 ]
+
 
 ]
