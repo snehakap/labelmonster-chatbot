@@ -830,7 +830,7 @@
       "machine not working", "troubleshooting", "support problem","technischen Support per Hotline und Fernwartung","Werkstatt","Fehlerbehebung","Was mache ich bei einer Störung?",
 "Gerät funktioniert nicht, was tun?","Gibt es eine Störung?", "Ist das Gerät gestört?", "Warum funktioniert das Gerät nicht?", "Wie kann ich eine Störung melden?", "Was kann ich bei einer Störung tun?", "Wer kann bei Störungen helfen?", "Gibt es technische Probleme?", "Wie behebe ich eine Störung?", "Ist der Service derzeit gestört?", "Wie erkenne ich eine Störung?", "Gibt es eine Anleitung bei Störungen?", "Kann ich die Störung selbst beheben?", "Wie schnell wird eine Störung behoben?", "Gibt es bekannte Störungen?", "Wie melde ich technische Probleme?", "Wer ist zuständig bei einer Störung?", "Gibt es einen Notfallkontakt bei Störungen?", "Wie verhindere ich Störungen?", "Was tun bei Software-Störungen?", "Was tun bei Hardware-Störungen?", "Gibt es Tipps zur Fehlerbehebung?", "Kann ich die Störung dokumentieren?", "Wie lange dauert die Behebung einer Störung?", "Gibt es Updates zur Störung?", "Kann ich Störungen online melden?",
 "Wie gehe ich bei einer Fehlfunktion vor?","Gibt es eine Stoerung?", "Ist das Gerät gestört?", "Warum funktioniert das Gerät nicht?", "Wie kann ich eine Stoerung melden?", "Was kann ich bei einer Stoerung tun?", "Wer kann bei Stoerungen helfen?", "Gibt es technische Probleme?", "Wie behebe ich eine Stoerung?", "Ist der Service derzeit gestört?", "Wie erkenne ich eine Stoerung?", "Gibt es eine Anleitung bei Stoerungen?", "Kann ich die Stoerung selbst beheben?", "Wie schnell wird eine Stoerung behoben?", "Gibt es bekannte Stoerungen?", "Wie melde ich technische Probleme?", "Wer ist zuständig bei einer Stoerung?", "Gibt es einen Notfallkontakt bei Stoerungen?", "Wie verhindere ich Stoerungen?", "Was tun bei Software-Stoerungen?", "Was tun bei Hardware-Stoerungen?", "Gibt es Tipps zur Fehlerbehebung?", "Kann ich die Stoerung dokumentieren?", "Wie lange dauert die Behebung einer Stoerung?", "Gibt es Updates zur Stoerung?", "Kann ich Stoerungen online melden?",
-"Was tun bei technischem Problem?",
+"Was tun bei technischem Problem?","Mein CPM schneidet nicht mehr aus","nicht mehr", "schneidet nicht" ,"cpm nicht",
 "Wie melde ich eine Störung?",
 "Wer hilft bei Geräteproblemen?",
 "Was passiert, wenn das Gerät ausfällt?",
@@ -2638,3 +2638,4 @@
 
 
 ]
+
